@@ -46,7 +46,7 @@ public class ContactDatabaseHelper {
         // primary key uniquely identifies records
         // autoincrement means let sqlite assign unique ids
         // start at 1 and go up by 1
-        if (connection != null) {
+        if (connection != null && !tableExists()) { // adding the tableExists() method after class to get rid of: SQL error or missing database (table tableContacts already exists)
             try {
                 Statement statement = connection.createStatement();
                 statement.execute(sqlCreate);
@@ -126,11 +126,15 @@ public class ContactDatabaseHelper {
     public void deleteAllContacts() {
         // DELETE FROM tableContacts
         String sqlDelete = "DELETE FROM " + TABLE_CONTACTS;
+        // follow up from question asked in class about resetting primary key ID back to 1
+        // from https://stackoverflow.com/questions/1601697/sqlite-reset-primary-key-field
+        //String sqlResetID = "DELETE FROM sqlite_sequence WHERE name='" + TABLE_CONTACTS + "'";
         System.out.println(sqlDelete);
         if (connection != null) {
             try {
                 Statement statement = connection.createStatement();
                 statement.execute(sqlDelete);
+                //statement.execute(sqlResetID);
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -160,5 +164,18 @@ public class ContactDatabaseHelper {
     }
 
 
+    private boolean tableExists() {
+        // http://www.java2s.com/Code/Java/Database-SQL-JDBC/Detectifatableexists.htm
+        DatabaseMetaData md = null;
+        boolean hasNext = false;
+        try {
+            md = connection.getMetaData();
+            ResultSet rs = md.getTables(null, null, TABLE_CONTACTS, null);
+            hasNext = rs.next();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return hasNext;
+    }
 
 }
