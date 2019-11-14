@@ -123,6 +123,20 @@ public class ContactDatabaseHelper {
         }
     }
 
+    public void deleteAllContacts() {
+        // DELETE FROM tableContacts
+        String sqlDelete = "DELETE FROM " + TABLE_CONTACTS;
+        System.out.println(sqlDelete);
+        if (connection != null) {
+            try {
+                Statement statement = connection.createStatement();
+                statement.execute(sqlDelete);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
     public void getConnection() {
         // have a field for a Connection reference
         try {

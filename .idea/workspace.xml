@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="a6ab9e28-17cd-4f94-9014-4e2d5ea6a885" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/databases/databaseContacts.db" beforeDir="false" afterPath="$PROJECT_DIR$/databases/databaseContacts.db" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ContactDatabaseHelper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ContactDatabaseHelper.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
     </list>

@@ -13,6 +13,8 @@ public class Main {
         Contact newContact = new Contact("SPIKE", "208-208-2082");
         helper.updateContact(1, newContact);
 
+        helper.deleteAllContacts();
+
         helper.closeConnection();
     }
 }
