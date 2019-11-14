@@ -1,9 +1,6 @@
-import org.sqlite.SQLiteException;
-
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ContactDatabaseHelper {
     // SQL: structured query language
@@ -75,8 +72,55 @@ public class ContactDatabaseHelper {
                 e.printStackTrace();
             }
         }
+    }
 
+    public List<Contact> getAllContactsList() {
+        List<Contact> contactList = new ArrayList<>();
+        // iterate through each record in our table
+        // extract the column values
+        // create a contact
+        // add the contact to the list
+        // much like file I/O while(inFile.hasNextLine()) {}
+        // while (!infile.eof()) {}
+        // SELECT * FROM tableContacts
+        String sqlSelect = "SELECT * FROM " + TABLE_CONTACTS;
+        System.out.println(sqlSelect);
+        if (connection != null) {
+            try {
+                Statement statement = connection.createStatement();
+                ResultSet resultSet = statement.executeQuery(sqlSelect);
+                // need to advance to the first record (if there is one)
+                while (resultSet.next()) { // returns false when there are no more records
+                    int id = resultSet.getInt(ID);
+                    String name = resultSet.getString(NAME);
+                    String phoneNumber = resultSet.getString(PHONE_NUMBER);
+                    String imagePath = resultSet.getString(IMAGE_PATH);
+                    Contact contact = new Contact(id, name, phoneNumber, imagePath);
+                    contactList.add(contact);
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return contactList;
+    }
 
+    public void updateContact(int id, Contact newContact) {
+        // update record with id to have new info stored in newContact
+        // UPDATE tableContacts SET name='SPIKE', phoneNumber='208-208-2082' WHERE id=1
+        String sqlUpdate = "UPDATE " + TABLE_CONTACTS + " SET " +
+                NAME + "='" + newContact.getName() + "', " +
+                PHONE_NUMBER + "='" + newContact.getPhoneNumber() + "' WHERE " +
+                ID + "=" + id;
+        System.out.println(sqlUpdate);
+        if (connection != null) {
+            try {
+                Statement statement = connection.createStatement();
+                statement.execute(sqlUpdate);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     public void getConnection() {
